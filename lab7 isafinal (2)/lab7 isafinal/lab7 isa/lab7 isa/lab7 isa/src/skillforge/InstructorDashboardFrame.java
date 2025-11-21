@@ -10,7 +10,7 @@ public class InstructorDashboardFrame extends JFrame {
     private final CourseService courseService;
     private final UserService userService;
     private final LoginFrame loginFrame; //allows returning to login upon logout
-
+    
     private final DefaultListModel<Course> listModel; //stores all courses owned by instructor
     private final JList<Course> courseJList;
 
@@ -140,6 +140,7 @@ public class InstructorDashboardFrame extends JFrame {
         bottom.add(analytics);
         bottom.add(quizzes);
 
+        add(new JScrollPane(courseJList), BorderLayout.CENTER);
         add(bottom, BorderLayout.SOUTH);
 
 
