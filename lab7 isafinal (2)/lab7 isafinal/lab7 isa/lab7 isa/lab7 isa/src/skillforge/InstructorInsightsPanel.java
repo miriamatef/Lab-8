@@ -104,7 +104,7 @@ public class InstructorInsightsPanel extends JPanel {
         for (LessonStats ls : stats.getLessons()) {
             model.addRow(new Object[]{ls.getLessonId(), ls.getLessonTitle(), ls.getAverageScore(), ls.getCompletionPercent()});
         }
-        lessonTable.setModel(model); //Updates table UI.
+        lessonTable.setModel(model); 
     }
 
     private void openCharts() {
