@@ -9,13 +9,13 @@ public class InstructorDashboardFrame extends JFrame {
     private final String instructorId;
     private final CourseService courseService;
     private final UserService userService;
-    private final LoginFrame loginFrame; //allows returning to login upon logout
+    private final LoginFrame loginFrame; 
 
-    private final DefaultListModel<Course> listModel; //stores all courses owned by instructor
+    private final DefaultListModel<Course> listModel; 
     private final JList<Course> courseJList;
 
     private DefaultListModel<String> studentListModel;
-    private JList<String> studentJList; //shows students enrolled in the selected course
+    private JList<String> studentJList; 
     
     
 
@@ -63,8 +63,8 @@ public class InstructorDashboardFrame extends JFrame {
         JButton edit = new JButton("Edit");
         JButton del = new JButton("Delete");
         JButton lessons = new JButton("Manage Lessons");
-        JButton analytics = new JButton("Analytics / Insights");  // NEW
-        JButton quizzes = new JButton("Manage Quizzes");          // NEW
+        JButton analytics = new JButton("Analytics / Insights");  
+        JButton quizzes = new JButton("Manage Quizzes");          
 
         //create button
         create.addActionListener(e -> new CreateCourseFrame(instructorId, this));
