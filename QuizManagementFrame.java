@@ -1,4 +1,4 @@
-package lab7.isa;
+package skillforge;
 
 import javax.swing.*;
 import java.awt.*;
@@ -87,12 +87,6 @@ public class QuizManagementFrame extends JFrame {
         lesson.setQuiz(quiz);
     quizService.addQuestionToQuiz(quiz, text, options, correctIndex);
     quizService.saveQuiz(
-    String.valueOf(course.getCourseId()),
-    String.valueOf(lesson.getLessonId()),
-    quiz
-);
-
-   quizService.saveQuiz(
     String.valueOf(course.getCourseId()),
     String.valueOf(lesson.getLessonId()),
     quiz

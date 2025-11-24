@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package lab7.isa;
+package skillforge;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class Quiz {
 
     public int getPassingScore() { return passingScore; }
     public void setPassingScore(int passingScore) {
-        // Clamp to [0, 100] to avoid invalid thresholds
+        
         if (passingScore < 0) passingScore = 0;
         if (passingScore > 100) passingScore = 100;
         this.passingScore = passingScore;
@@ -108,5 +108,18 @@ public class Quiz {
     quiz.setPassingScore(json.optInt("passingScore", 0));
     return quiz;
 }
+    
+    private boolean taken;
+private boolean passed;
+private int lastScore;
+public void recordAttempt(int score) {
+    this.taken = true;
+    this.lastScore = score;
+    this.passed = score >= passingScore;
+}
+public boolean isTaken() { return taken; }
+public boolean isPassed() { return passed; }
+public int getLastScore() { return lastScore; }
+
 
 }
