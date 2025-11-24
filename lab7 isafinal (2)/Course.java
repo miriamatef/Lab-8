@@ -9,7 +9,7 @@ public class Course {
     private String instructorId;
     private String status;
     private List<Lesson> lessons;
-    private List<String> students; // stores student IDs
+    private List<String> students; 
 
     public Course(int courseId, String title, String description, String instructorId,
                   List<Lesson> lessons, List<String> students, String status) {
@@ -57,7 +57,7 @@ public class Course {
     public List<String> getStudentDisplayList(UserService userService) {
         List<String> display = new ArrayList<>();
         for (String id : students) {
-            String name = userService.getUsernameById(id); // implement in UserService
+            String name = userService.getUsernameById(id); 
             display.add(name != null ? name + " (" + id + ")" : id);
         }
         return display;
