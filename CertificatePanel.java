@@ -4,18 +4,17 @@
  */
 package skillforge;
 
-/**
- *
- * @author karen
- */
-
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class CertificatePanel extends JPanel {
     private final String studentId;
@@ -54,16 +53,25 @@ public class CertificatePanel extends JPanel {
             }
         });
 
+        JButton refreshBtn = new JButton("Refresh");
+        refreshBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadCertificates(); // reload the table
+            }
+        });
+
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        bottom.add(viewBtn);
+        bottom.add(refreshBtn);  // add refresh button
+        bottom.add(viewBtn);     // keep view button
         add(bottom, BorderLayout.SOUTH);
     }
 
     private void loadCertificates() {
-        User u = dbManager.findUserById(studentId).orElse(null);
+        JSONObject u = dbManager.findUserById(studentId);
         if (u == null) return;
 
-        List<Certificate> certs = u.getCertificates();
+        JSONArray certs = dbManager.getCertificatesForUser(studentId);
         tableModel.setCertificates(certs);
     }
 }
