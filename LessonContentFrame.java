@@ -1,4 +1,4 @@
-package lab7.isa;
+package skillforge;
 
 import javax.swing.*;
 import java.awt.*;
