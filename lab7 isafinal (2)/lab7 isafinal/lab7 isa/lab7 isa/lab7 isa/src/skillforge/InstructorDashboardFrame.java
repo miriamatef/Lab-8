@@ -10,18 +10,20 @@ public class InstructorDashboardFrame extends JFrame {
     private final CourseService courseService;
     private final UserService userService;
     private final LoginFrame loginFrame; //allows returning to login upon logout
-    
+
     private final DefaultListModel<Course> listModel; //stores all courses owned by instructor
     private final JList<Course> courseJList;
 
     private DefaultListModel<String> studentListModel;
     private JList<String> studentJList; //shows students enrolled in the selected course
+    
+    
 
-    public InstructorDashboardFrame(String instructorId, UserService userService, LoginFrame loginFrame) {
+    public InstructorDashboardFrame(String instructorId, UserService userService, JFrame loginFrame) {
 
         this.instructorId = instructorId;
         this.userService = userService;
-        this.loginFrame = loginFrame;
+        this.loginFrame = (LoginFrame)loginFrame;
         this.courseService = new CourseService(userService.db);
 
         setTitle("Instructor Dashboard");
@@ -39,7 +41,7 @@ public class InstructorDashboardFrame extends JFrame {
     }
 
     private void initUI() {
-        // TOP BAR (LOGOUT)
+        
         JButton logoutBtn = new JButton("Logout");
         logoutBtn.addActionListener(e -> {
             loginFrame.setVisible(true); //reopen login frame
@@ -51,12 +53,12 @@ public class InstructorDashboardFrame extends JFrame {
         add(topBar, BorderLayout.NORTH);
 
 
-        // LEFT MAIN COURSE LIST
+       
         add(new JScrollPane(courseJList), BorderLayout.CENTER); 
         //shows instructor's courses (scrollable)
 
 
-        //BOTTOM ACTION BUTTONS
+        //action buttons
         JButton create = new JButton("Create");
         JButton edit = new JButton("Edit");
         JButton del = new JButton("Delete");
@@ -96,7 +98,7 @@ public class InstructorDashboardFrame extends JFrame {
             }
         });
 
-        //lessons button
+       //lessons button
         lessons.addActionListener(e -> {
             Course c = courseJList.getSelectedValue();
             if (c == null) {
@@ -128,7 +130,7 @@ public class InstructorDashboardFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Select a course first.");
                 return;
             }
-            new QuizManagementFrame(c);   
+            new QuizManagementFrame(c, userService.db);   
         });
 
          
@@ -140,11 +142,8 @@ public class InstructorDashboardFrame extends JFrame {
         bottom.add(analytics);
         bottom.add(quizzes);
 
-        add(new JScrollPane(courseJList), BorderLayout.CENTER);
         add(bottom, BorderLayout.SOUTH);
 
-
-        // RIGHT PANEL: STUDENT LIST
         studentListModel = new DefaultListModel<>();
         studentJList = new JList<>(studentListModel);
 
@@ -158,13 +157,17 @@ public class InstructorDashboardFrame extends JFrame {
 
         add(studentPanel, BorderLayout.EAST);
 
-
-        //UPDATE STUDENT LIST WHEN COURSE SELECTED CHANGES
+       
         courseJList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 Course c = courseJList.getSelectedValue();
-                if (c != null) updateStudentList(c);
+                if (c != null) 
+                    updateStudentList(c);
+                else 
+                    return;
             }
+            else 
+                return;
         });
     }
 
