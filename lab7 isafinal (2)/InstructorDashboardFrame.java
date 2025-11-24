@@ -11,7 +11,7 @@ public class InstructorDashboardFrame extends JFrame {
     private final UserService userService;
     private final LoginFrame loginFrame; 
 
-    private final DefaultListModel<Course> listModel; 
+    private final DefaultListModel<Course> listModel;
     private final JList<Course> courseJList;
 
     private DefaultListModel<String> studentListModel;
@@ -41,24 +41,16 @@ public class InstructorDashboardFrame extends JFrame {
     }
 
     private void initUI() {
-        // TOP BAR (LOGOUT)
         JButton logoutBtn = new JButton("Logout");
         logoutBtn.addActionListener(e -> {
-            loginFrame.setVisible(true); //reopen login frame
-            dispose(); // close the dashboard frame
+            loginFrame.setVisible(true); 
+            dispose(); 
         });
 
         JPanel topBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         topBar.add(logoutBtn);
         add(topBar, BorderLayout.NORTH);
-
-
-        // LEFT MAIN COURSE LIST
         add(new JScrollPane(courseJList), BorderLayout.CENTER); 
-        //shows instructor's courses (scrollable)
-
-
-        //BOTTOM ACTION BUTTONS
         JButton create = new JButton("Create");
         JButton edit = new JButton("Edit");
         JButton del = new JButton("Delete");
@@ -66,10 +58,8 @@ public class InstructorDashboardFrame extends JFrame {
         JButton analytics = new JButton("Analytics / Insights");  
         JButton quizzes = new JButton("Manage Quizzes");          
 
-        //create button
         create.addActionListener(e -> new CreateCourseFrame(instructorId, this));
 
-        //edit button
         edit.addActionListener(e -> {
             Course c = courseJList.getSelectedValue();
             if (c == null) {
@@ -79,7 +69,6 @@ public class InstructorDashboardFrame extends JFrame {
             new EditCourseFrame(c, this);
         });
 
-        //delete button
         del.addActionListener(e -> {
             Course c = courseJList.getSelectedValue();
             if (c == null) {
@@ -98,7 +87,6 @@ public class InstructorDashboardFrame extends JFrame {
             }
         });
 
-        //lessons button
         lessons.addActionListener(e -> {
             Course c = courseJList.getSelectedValue();
             if (c == null) {
@@ -108,7 +96,6 @@ public class InstructorDashboardFrame extends JFrame {
             new LessonManagementFrame(c);
         });
 
-        // Instructor Insights Panel
         analytics.addActionListener(e -> {
             Course c = courseJList.getSelectedValue();
             if (c == null) {
@@ -123,7 +110,6 @@ public class InstructorDashboardFrame extends JFrame {
             insightsFrame.setVisible(true);
         });
 
-        // Quiz Management
         quizzes.addActionListener(e -> {
             Course c = courseJList.getSelectedValue();
             if (c == null) {
@@ -145,7 +131,6 @@ public class InstructorDashboardFrame extends JFrame {
         add(bottom, BorderLayout.SOUTH);
 
 
-        // RIGHT PANEL: STUDENT LIST
         studentListModel = new DefaultListModel<>();
         studentJList = new JList<>(studentListModel);
 
@@ -155,12 +140,9 @@ public class InstructorDashboardFrame extends JFrame {
         JPanel studentPanel = new JPanel(new BorderLayout());
         studentPanel.add(new JLabel("Enrolled Students", JLabel.CENTER), BorderLayout.NORTH);
         studentPanel.add(studentScroll, BorderLayout.CENTER);
-        //this shows a sidebar with enrolled students of the selected course
 
         add(studentPanel, BorderLayout.EAST);
 
-
-        //UPDATE STUDENT LIST WHEN COURSE SELECTED CHANGES
         courseJList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 Course c = courseJList.getSelectedValue();
